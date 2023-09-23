@@ -8,7 +8,7 @@
     <NoData v-if="items.length <= 0 && !loading" />
     <Preloading v-if="items.length <= 0 && loading" />
     <template v-for="(item, index) in items">
-      <CardPost :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPost>
+      <CardPostNonCategoryPage :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPostNonCategoryPage>
     </template>
   </div>
 
@@ -58,6 +58,7 @@ export default defineComponent({
   computed: {
     ...mapState(useStore, {
       max_pages: 'max_pages',
+      loading:'loading',
     }),
     ...mapWritableState(useStore, [
       'items',

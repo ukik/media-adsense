@@ -20,10 +20,11 @@ export default route(function ({ store, ssrContext }) {
     scrollBehavior: function(to, from, savedPosition) {
       return new Promise((resolve, reject) => {
         if(to.name !== 'post') {
-          resolve({
-            top: 0
-          })
-          return
+          if (savedPosition) {
+            return resolve(savedPosition)
+          } else {
+            return resolve({ top: 0 })
+          }
         }
 
         setTimeout(() => {
@@ -39,11 +40,19 @@ export default route(function ({ store, ssrContext }) {
               behavior: 'smooth',
             })
           } else {
-            resolve({
-              top: 0
-            })
+            if (savedPosition) {
+              return resolve(savedPosition)
+            } else {
+              resolve({
+                el: document.getElementById('search_box'),
+                // behavior: 'smooth',
+              })
+            }
+            // resolve({
+            //   top: 0
+            // })
           }
-        }, 500)
+        }, 100)
       })
     },
     routes,

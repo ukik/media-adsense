@@ -7,7 +7,7 @@
 </style>
 
 <template>
-  <q-toolbar v-show="$q.screen.width > 425" class="col-12 bg-dark">
+  <q-toolbar id="navmenu" v-show="$q.screen.width > 425" class="col-12 bg-dark">
     <q-btn :to="{
       name: 'home',
       query: {
@@ -46,7 +46,7 @@
       </q-menu>
     </q-btn>
 
-    <q-btn unelevated square flat color="white" icon="bookmark" label="How to download" />
+    <!-- <q-btn unelevated square flat color="white" icon="bookmark" label="How to download" /> -->
     <q-btn :to="{ name:'contact' }" unelevated square flat color="white" icon="account_box" label="Contact Us" />
     <q-space />
 

@@ -1,50 +1,55 @@
 <template>
   <q-layout @scroll="scrollHandler" view="lHh Lpr lFf">
     <q-header unelevated>
-      <div class="row flex items-center bg-dark q-pl-md">
-        <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
+      <q-no-ssr>
+        <div v-if="$q.screen.width > 425" class="row flex items-center bg-dark q-pl-md">
+          <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
 
-        <q-toolbar-title>
-          FCS Media
-        </q-toolbar-title>
-
-        <div>
-          <q-btn :to="{ name:'disclaimer' }" class="text-caption" square label="DMCA-Copyrights" flat no-caps></q-btn>
-          <q-btn :to="{ name:'privacy' }" class="text-caption" square label="Privacy Policy" flat no-caps></q-btn>
-          <q-btn class="text-caption" square label="Terms Of UseSitemap" flat no-caps></q-btn>
+          <!-- <q-toolbar-title>
+          {{ dateNow() }}
+        </q-toolbar-title> -->
+          {{ dateNow() }}
+          <q-space />
+          <div>
+            <q-btn :to="{ name: 'disclaimer' }" class="text-caption" square label="DMCA-Copyrights" flat no-caps></q-btn>
+            <q-btn :to="{ name: 'privacy' }" class="text-caption" square label="Privacy Policy" flat no-caps></q-btn>
+            <q-btn :to="{ name: 'terms' }" class="text-caption" square label="Terms Of Use" flat no-caps></q-btn>
+          </div>
         </div>
-      </div>
+
+        <q-toolbar class="bg-white" v-else>
+          <q-btn @click="leftDrawerOpen = true" round color="primary" flat icon="menu"></q-btn>
+          <!-- <q-toolbar-title>
+          <RouterLink :to="{ name:'home' }">
+            <img style="height: 50px;" src="~assets/musikalindo.png" >
+          </RouterLink>
+        </q-toolbar-title> -->
+        </q-toolbar>
+        <q-separator color="grey-4" />
+      </q-no-ssr>
     </q-header>
 
-    <!-- <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
+    <q-drawer mini-to-overlay behavior="mobile" v-model="leftDrawerOpen" show-if-above bordered>
+      <!-- <q-list>
+        <q-item-label header>
           Essential Links
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer> -->
+        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+      </q-list> -->
+
+      <LeftDrawer />
+    </q-drawer>
 
     <q-page-container class="bg-grey-3 row flex justify-center">
-      <router-view :positionY="positionY" :items="items_random" />
+      <router-view :loading="loading" :positionY="positionY" :items="items_random" />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
-
+import { date as qdate } from 'quasar'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
 import { useStore as useStoreHome } from 'src/stores/home-store'
@@ -76,7 +81,7 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useStoreGLOBAL, [
-      'tags', 'categories', 'items_random'
+      'tags', 'categories', 'items_random', 'loading'
     ]),
     ...mapState(useStoreHome, {
       items: 'items',
@@ -99,7 +104,7 @@ export default defineComponent({
       date_order: 'order',
       date_per_page: 'per_page',
       date_keyword: 'keyword',
-      date_date:'date',
+      date_date: 'date',
     }),
     ...mapState(useStoreTag, {
       items_tag: 'items_tag',
@@ -107,7 +112,7 @@ export default defineComponent({
       tag_order: 'order',
       tag_per_page: 'per_page',
       tag_keyword: 'keyword',
-      tag_tag:'tag',
+      tag_tag: 'tag',
     }),
     ...mapState(useStoreAuthor, {
       items_author: 'items_author',
@@ -115,7 +120,7 @@ export default defineComponent({
       author_order: 'order',
       author_per_page: 'per_page',
       author_keyword: 'keyword',
-      author_author:'author',
+      author_author: 'author',
     }),
     ...mapState(useStorePost, {
       post_item: 'item',
@@ -123,6 +128,11 @@ export default defineComponent({
   },
 
   methods: {
+    dateNow() {
+      const today = new Date();
+      return qdate.formatDate(today, 'dddd, DD MMM YYYY')
+      // return today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+    },
     onLoadHome() {
       const currentRoute = this.$route
       const current_page = this.home_current_page ? this.home_current_page : Number(currentRoute.query.current_page)
@@ -261,7 +271,7 @@ export default defineComponent({
     ]),
   },
   created() {
-    if(process.env.CLIENT) {
+    if (process.env.CLIENT) {
       if (
         this.items?.length <= 0 ||
         this.items_categories?.length <= 0 ||
@@ -274,7 +284,7 @@ export default defineComponent({
   },
   mounted() {
     this.onGlobalCategories()
-    this.onGlobalTags()
+    // this.onGlobalTags()
     this.onGlobalPost()
 
     setInterval(() => {

@@ -13,6 +13,7 @@ export const useStore = defineStore('GLOBAL', {
     tags: [],
     items_random: [],
 
+    loading: false,
     loading_categories: false,
     loading_tags: false,
 
@@ -27,6 +28,10 @@ export const useStore = defineStore('GLOBAL', {
   actions: {
     async onGlobalPost(payload = null) {
       const vm = this
+
+      if(vm.loading) return
+
+      vm.loading = true
 
       const items = await axios.get(host+`posts?per_page=6&rand`)
         .then(response => {
@@ -46,6 +51,8 @@ export const useStore = defineStore('GLOBAL', {
           console.error("There was an error!", error);
           return null
         });
+
+      vm.loading = false
 
       if(!items) return
 

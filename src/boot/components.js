@@ -2,8 +2,8 @@ import { boot } from 'quasar/wrappers'
 import { defineAsyncComponent } from 'vue'
 import { date as qdate } from 'quasar'
 
-export const host = 'http://wp-rest-api.local/wp-json/wp/v2/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
-export const host_laravel = 'http://localhost:8000/api/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
+export const host = 'https://blog.musikalindo.com/wp-json/wp/v2/' // 'http://wp-rest-api.local/wp-json/wp/v2/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
+export const host_laravel = 'http://wp-rest-api-laravel.musikalindo.com/api/' //'http://localhost:8000/api/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
 
 
 export const per_page = 20
@@ -23,11 +23,19 @@ import { useStore as useStoreGLOBAL } from 'src/stores/GLOBAL'
 
 // import {VueRecaptcha} from 'vue-recaptcha';
 
+const shuffle = (array) => {
+  return array.map((a) => ({ sort: Math.random(), value: a }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((a) => a.value);
+};
+
 export default boot(({ app, store, ssrContext }) => {
   // console.log('ssrContext.req.headers.host', ssrContext.req.headers.host)
   app.mixin({
     data() {
       return {
+        adsense_show: true,
+
         web_title: 'FreeUdemyCourse',
         web_description: 'Download Udemy Paid Courses for Free. Learn Hacking, Programming, IT &amp; Software, Marketing, Music, Free Online Courses, and more.',
         // hostname: ssrContext
@@ -50,6 +58,11 @@ export default boot(({ app, store, ssrContext }) => {
       }
     },
     methods: {
+      suffleArray(array) {
+        return array.map((a) => ({ sort: Math.random(), value: a }))
+            .sort((a, b) => a.sort - b.sort)
+            .map((a) => a.value);
+      },
       formatDate(date = new Date()) {
         const previous = new Date(date.getTime());
         // previous.setDate(date.getDate() - 1);
@@ -148,6 +161,19 @@ export default boot(({ app, store, ssrContext }) => {
           }
         }
         return temp_arr
+      },
+      getExtendsSpesificCategory(arr, type, term_id) {
+        // type = category || post_tag
+        let temp_arr = []
+        for (let i = 0; i < arr?.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            // console.log(arr[i][j]['taxonomy'], type)
+            if(arr[i][j]['taxonomy'] == type && arr[i][j]['term_id'] == term_id) {
+              temp_arr.push(arr[i][j])
+            }
+          }
+        }
+        return temp_arr
       }
     }
   });
@@ -156,6 +182,14 @@ export default boot(({ app, store, ssrContext }) => {
 
   app.component('CardPost',
     defineAsyncComponent(() => import('src/components/CardPost.vue'))
+  )
+
+  app.component('CardPostCategoryPageOnly',
+    defineAsyncComponent(() => import('src/components/CardPostCategoryPageOnly.vue'))
+  )
+
+  app.component('CardPostNonCategoryPage',
+    defineAsyncComponent(() => import('src/components/CardPostNonCategoryPage.vue'))
   )
 
   app.component('PaginationHome',
@@ -194,7 +228,6 @@ export default boot(({ app, store, ssrContext }) => {
     defineAsyncComponent(() => import('src/components/Preloading.vue'))
   )
 
-
   app.component('NoData',
     defineAsyncComponent(() => import('src/components/NoData.vue'))
   )
@@ -227,6 +260,9 @@ export default boot(({ app, store, ssrContext }) => {
     defineAsyncComponent(() => import('src/components/SearchBoxTag.vue'))
   )
 
+  app.component('LeftDrawer',
+    defineAsyncComponent(() => import('src/components/LeftDrawer.vue'))
+  )
 
 
 })

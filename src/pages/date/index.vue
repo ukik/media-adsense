@@ -14,7 +14,7 @@
     <NoData v-if="items_date.length <= 0 && !loading" />
     <Preloading v-if="items_date.length <= 0 && loading" />
     <template v-for="(item, index) in items_date">
-      <CardPost :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPost>
+      <CardPostNonCategoryPage :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPostNonCategoryPage>
     </template>
   </div>
 

@@ -1,5 +1,5 @@
 html{
-  scroll-behavior:smooth
+  // scroll-behavior:smooth
 }
 
 // app global css in SCSS form
@@ -39,11 +39,13 @@ h4, .h4, .heading-4 {
     color: #222;
 }
 
-.q-item.q-router-link--active, .q-item--active {
+#navmenu .q-item.q-router-link--active,
+#navmenu .q-item--active {
   color: var(--q-dark);
 }
 
-.q-item.q-router-link--active:hover, .q-item--active:hover {
+#navmenu .q-item.q-router-link--active:hover,
+#navmenu .q-item--active:hover {
   background-color: red;
   color: white;
 }

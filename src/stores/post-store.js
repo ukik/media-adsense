@@ -18,6 +18,7 @@ export const useStore = defineStore('post-store', {
     keyword: '',
     category: '',
 
+    init: false,
     loading: false,
     loading_suggestion: false,
   }),
@@ -63,6 +64,8 @@ export const useStore = defineStore('post-store', {
       if (!items) return
 
       vm.item = items?.data
+
+      vm.init = true
     },
 
     async onRetrieveSuggestion(payload = null) {

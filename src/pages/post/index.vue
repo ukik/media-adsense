@@ -1,9 +1,9 @@
 <template>
   <q-no-ssr>
-    <SearchBoxHome />
+    <SearchBoxHome id="search_box" />
   </q-no-ssr>
 
-  <div class="q-px-md col-12">
+  <div v-if="adsense_show" class="q-px-md col-12">
     <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:90px"
       data-ad-client="ca-pubxxx" data-ad-slot="slot_id">
       Adsense 20
@@ -12,23 +12,9 @@
 
   <NoData v-if="get_post.length <= 0 && !loading" />
 
-  <div v-for="n in 3" class="col-12 q-pa-md">
-    <q-skeleton height="170px" square animation="fade" />
+  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pa-md text-h5">{{ get_post?.title?.rendered }}</div>
 
-    <div class="row items-start no-wrap q-mt-sm">
-      <q-skeleton size="56px" square animation="fade" />
-
-      <div class="col q-pl-sm">
-        <q-skeleton type="text" square width="30%" animation="fade" />
-        <q-skeleton type="text" square height="12px" animation="fade" />
-        <q-skeleton type="text" square height="12px" width="75%" animation="fade" />
-      </div>
-    </div>
-  </div>
-
-  <div class="col-12 q-pa-md text-h5">{{ get_post?.title?.rendered }}</div>
-
-  <div class="col-12 q-pb-sm q-px-md text-caption text-grey">
+  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pb-sm q-px-md text-caption text-grey">
     By
     <RouterLink :to="{
       name: 'author',
@@ -70,10 +56,10 @@
     <div>
       <q-btn color="orange" rounded unelevated size="sm" no-caps icon="mail" label="Email" />
     </div> -->
-    <div class="fb-share-button " :data-href="domain" data-layout="button_count"></div>
-    <q-space />
-    <q-btn :href="`${$route.path}#comments`" color="primary" flat dense icon="comment"
+    <q-btn v-show="init ||  get_post?.title && !loading"  :href="`${$route.path}#comments`" color="primary" flat dense icon="comment"
       :label="get_post?.get_comment_count?.approved" />
+      <q-space />
+    <div class="fb-share-button " :data-href="domain" data-layout="button_count"></div>
   </div>
 
   <!-- <div class="q-px-md q-mt-md col-12">
@@ -83,11 +69,26 @@
     </div>
   </div> -->
 
-  <div class="col-12 q-px-md">
+  <div v-if="get_post?.x_featured_media_large" v-show="init ||  get_post?.title && !loading" class="col-12 q-px-md">
     <q-img :src="get_post?.x_featured_media_large" />
   </div>
 
-  <div class="col-12 q-px-md entry-content">
+  <div v-if="get_post.length <= 0 && loading" v-for="n in 3" class="col-12 q-pa-md">
+    <q-skeleton height="170px" square animation="fade" />
+
+    <div class="row items-start no-wrap q-mt-sm">
+      <q-skeleton size="56px" square animation="fade" />
+
+      <div class="col q-pl-sm">
+        <q-skeleton type="text" square width="30%" animation="fade" />
+        <q-skeleton type="text" square height="12px" animation="fade" />
+        <q-skeleton type="text" square height="12px" width="75%" animation="fade" />
+      </div>
+    </div>
+  </div>
+
+
+  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-px-md entry-content">
 
     <h2>{{ get_post?.title?.rendered }}</h2>
 
@@ -101,7 +102,7 @@
     <div v-html="get_post?.content?.rendered" />
 
 
-    <div class="q-pt-md q-pb-lg col-12">
+    <div v-if="adsense_show" class="q-pt-md q-pb-lg col-12">
       <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:90px"
         data-ad-client="ca-pubxxx" data-ad-slot="slot_id">
         Adsense 21
@@ -110,7 +111,7 @@
 
   </div>
 
-  <div class="q-pb-lg q-pl-md">
+  <div class="col-12 q-pb-lg q-pl-md">
     <template v-for="(item, index) in getExtends(get_post?.extends, 'post_tag')">
       <q-btn :to="{
         name: 'tag',
@@ -124,14 +125,17 @@
           keyword: tag_keyword,
           tag: item?.term_id,
         }
-      }" :label="'#' + item?.name" outline square dense color="grey" class="q-px-sm" />
+      }" :label="'#' + item?.name" outline square dense color="grey" class="q-px-sm text-weight-light" />
     </template>
   </div>
 
-  <div id="comments" />
+  <div class="col-12" id="comments" />
+
   <q-no-ssr>
-    <Comment :id="get_post?.id" />
-    <Suggestion />
+    <div class="col-12">
+      <Comment :id="get_post?.id" />
+      <Suggestion />
+    </div>
   </q-no-ssr>
 </template>
 
@@ -184,6 +188,7 @@ export default defineComponent({
     ...mapState(useStore, [
       'get_post',
       'loading',
+      'init',
     ]),
     get_date() {
       if (!this.get_post?.modified) return 0

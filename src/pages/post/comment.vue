@@ -1,7 +1,7 @@
 <template>
   <div class="q-mx-md q-mb-lg text-h6">Comments</div>
 
-  <q-list separator bordered class="col-12 q-mx-md">
+  <q-list v-if="items.lengt > 0" separator bordered class="col-12 q-mx-md">
     <template v-for="(item, index) in items">
 
       <q-item>

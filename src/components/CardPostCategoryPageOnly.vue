@@ -35,20 +35,6 @@
           }
         }" square :label="getExtendsSpesificCategory(item?.extends, 'category', category)[0]?.name" color="pink" unelevated />
 
-        <q-btn v-else :to="{
-          name: 'category',
-          params: {
-            slug: suffleArray(getExtends(item?.extends, 'category'))?.slug
-          },
-          query: {
-            current_page: category_current_page,
-            order: category_order,
-            per_page: 1,
-            keyword: category_keyword,
-            category: suffleArray(getExtends(item?.extends, 'category'))?.term_id,
-          }
-        }" square :label="suffleArray(getExtends(item?.extends, 'category'))?.name" color="pink" unelevated />
-
       </div>
 
       <q-separator />
@@ -103,7 +89,7 @@
         }" class="text-caption text-capitalize text-grey">By {{ item?.x_author }}</RouterLink>
         <q-space />
 
-        <q-btn
+        <q-btn v-if="getExtends(item?.extends, 'post_tag')"
           color="grey"
           round
           flat
@@ -113,7 +99,7 @@
         />
       </q-card-actions>
 
-      <q-slide-transition>
+      <q-slide-transition v-if="getExtends(item?.extends, 'post_tag')">
         <div v-show="expanded">
           <q-separator />
           <q-card-section class="text-subtitle2">
@@ -177,6 +163,7 @@ export default {
       category_order: 'order',
       category_per_page: 'per_page',
       category_keyword: 'keyword',
+      category: 'category',
     }),
     ...mapState(useStoreTag, {
       tag_current_page: 'current_page',

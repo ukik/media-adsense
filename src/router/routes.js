@@ -50,6 +50,7 @@ const routes = [
             name: 'contact',
             component: () => import('pages/contact')
           },
+
           {
             path: '/disclaimer',
             name: 'disclaimer',
@@ -59,6 +60,11 @@ const routes = [
             path: '/privacy-policy',
             name: 'privacy',
             component: () => import('pages/privacy')
+          },
+          {
+            path: '/terms-of-use',
+            name: 'terms',
+            component: () => import('pages/terms')
           },
         ]
       }

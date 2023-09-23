@@ -16,7 +16,7 @@
     <Preloading v-if="items_category.length <= 0 && loading" />
 
     <template v-for="(item, index) in items_category">
-      <CardPost :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPost>
+      <CardPostCategoryPageOnly :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPostCategoryPageOnly>
     </template>
   </div>
 
