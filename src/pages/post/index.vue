@@ -115,16 +115,17 @@
 
     <div style="z-index: 9;" class="sharethis-inline-share-buttons"></div>
 
-    <div v-if="adsense_show" class="q-pt-md q-pb-lg col-12">
+    <div v-if="adsense_show" class="q-pt-md q-pb-md col-12">
       <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:90px"
         data-ad-client="ca-pubxxx" data-ad-slot="slot_id">
         Adsense 21
       </div>
     </div>
 
+    <q-separator class="q-mt-lg" padding />
   </div>
 
-  <div class="q-mx-md q-mb-lg text-h6">Categories</div>
+  <div class="q-mx-md q-mt-md q-mb-lg text-h6">Categories</div>
 
   <div class="col-12 q-pb-lg q-pl-md">
     <template v-for="(item, index) in getExtends(get_post?.extends, 'category')">
