@@ -174,9 +174,9 @@ module.exports = configure(function (ctx) {
 
 
       manifest: {
-        name: `Media Share`,
-        short_name: `A media to share information`,
-        description: `A media to share contents, tutorials, blogs, or news`,
+        name: `Musikalindo`,
+        short_name: `Musikalindo`,
+        description: `Musikalindo: situs musik terlengkap di indonesia, berita musik, lirik lagu, RBT, foto penyanyi, jadwal konser - Musikalindo.com`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

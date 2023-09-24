@@ -1,8 +1,9 @@
 {
-  "name": "media-share",
+  "name": "musikalindo",
+  "title": "Musikalindo: We talk about music & infotainment | Breaking News | Music Videos | Entertainment News | Hip Hop News",
   "version": "0.0.1",
-  "description": "A media to share information",
-  "productName": "A media to share contents, tutorials, blogs, or news",
+  "description": "Musikalindo: situs musik terlengkap di indonesia, berita musik, lirik lagu, RBT, foto penyanyi, jadwal konser - Musikalindo.com",
+  "productName": "music charts, news, photos, video, infotainment, gosip, artis, indonesia, internasional, game, entertainment, film, resensi, musik, zodiac, kartu ucapan, berita musik, lirik lagu, foto penyanyi, jadwal konser, pop, jazz, edm, funk, r&b, dangdut, hiphop, alternative, experimental",
   "author": "ukik <muhamadduki@gmail.com>",
   "private": true,
   "scripts": {
