@@ -58,8 +58,11 @@
     </div> -->
     <q-btn v-show="init ||  get_post?.title && !loading"  :href="`${$route.path}#comments`" color="primary" flat dense icon="comment"
       :label="get_post?.get_comment_count?.approved" />
-      <q-space />
-    <div class="fb-share-button " :data-href="domain" data-layout="button_count"></div>
+
+    <q-space />
+
+    <div style="z-index: 9;" :class="[ $q.screen.width <= 1024 ? 'q-mt-md full-width' : '']" class="sharethis-inline-share-buttons"></div>
+    <!-- <div class="fb-share-button " :data-href="domain" data-layout="button_count"></div> -->
   </div>
 
   <!-- <div class="q-px-md q-mt-md col-12">
@@ -101,6 +104,9 @@
 
     <div v-html="get_post?.content?.rendered" />
 
+    <div style="z-index: 9;" class="sharethis-inline-reaction-buttons"></div>
+
+    <div style="z-index: 9;" class="sharethis-inline-share-buttons"></div>
 
     <div v-if="adsense_show" class="q-pt-md q-pb-lg col-12">
       <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:90px"
@@ -125,7 +131,7 @@
           keyword: tag_keyword,
           tag: item?.term_id,
         }
-      }" :label="'#' + item?.name" outline square dense color="grey" class="q-px-sm text-weight-light" />
+      }" no-caps :label="'#' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
     </template>
   </div>
 
@@ -219,8 +225,13 @@ export default defineComponent({
   created() {
     // this.onRetrieve()
   },
-  mounted() {
+  async mounted() {
     this.domain = "https://" + window.location.host + "/post/" + this.$route.params.slug;
+
+    // mengaktifkan sharethis
+    const st = window.__sharethis__
+    st.href = window.location.href
+    st.initialize()
   },
   methods: {
     ...mapActions(useStore, [

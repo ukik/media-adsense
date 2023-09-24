@@ -115,7 +115,7 @@
                   keyword: tag_keyword,
                   tag: val?.term_id,
                 }
-              }" :label="'#' + val?.name" outline square dense color="grey" class="q-px-sm text-weight-light" />
+              }" no-caps :label="'#' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
             </template>
           </q-card-section>
         </div>

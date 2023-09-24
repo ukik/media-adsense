@@ -1,11 +1,11 @@
 <template>
-  <q-list separator class="rounded-borders text-primary">
+  <q-list  class="rounded-borders text-primary">
     <q-item :to="{ name:'home' }" class="q-my-md" clickable v-ripple>
       <q-item-section>
         <q-img class="img-logo" src="~/assets/musikalindo.png" alt="" />
       </q-item-section>
     </q-item>
-    <!-- <q-separator /> -->
+    <q-separator />
 
     <q-item clickable :to="{ name: 'home' }" v-ripple :active="$route.name === 'home'"
       active-class="my-menu-link">
@@ -30,7 +30,7 @@
             }
           }"  clickable >
             <q-item-section>
-              <q-item-label class="text-capitalize text-weight-regular">- {{ item?.name }}</q-item-label>
+              <q-item-label class="text-capitalize  text-weight-regular">- {{ item?.name }}</q-item-label>
             </q-item-section>
           </q-item>
         </template>

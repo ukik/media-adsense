@@ -25,7 +25,7 @@
           </RouterLink>
         </q-toolbar-title> -->
         </q-toolbar>
-        <q-separator color="grey-4" />
+        <!-- <q-separator color="grey-4" /> -->
       </q-no-ssr>
     </q-header>
 
@@ -289,8 +289,9 @@ export default defineComponent({
 
     setInterval(() => {
       this.onGlobalPost()
-    }, 10000);
+    }, 30000);
 
+    return
     document.addEventListener('deviceready', function () {
 
       // if(vm.$q.platform.is.cordova) {

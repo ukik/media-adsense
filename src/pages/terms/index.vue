@@ -1,5 +1,7 @@
 <template>
-
+  <q-no-ssr>
+    <SearchBoxHome />
+  </q-no-ssr>
   <div class="col-12 q-pa-md text-h5">Terms of Use</div>
 
   <div id="page" v-html="get_post?.content.rendered?.replaceAll('\n','')" class="col-12 q-px-md q-mb-lg row q-col-gutter-md" v-once />

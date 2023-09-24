@@ -1,4 +1,7 @@
 <template>
+  <q-no-ssr>
+    <SearchBoxHome />
+  </q-no-ssr>
 
   <div class="col-12 q-pa-md text-h5">Disclaimer</div>
 

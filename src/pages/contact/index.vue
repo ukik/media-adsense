@@ -1,5 +1,7 @@
 <template>
-
+  <q-no-ssr>
+    <SearchBoxHome />
+  </q-no-ssr>
   <div class="col-12 q-pa-md text-h5">Contact Us</div>
 
   <q-form @submit="onSubmit" @keyup.enter="onSubmit" class="col-12 q-pr-md q-ml-none q-mb-lg row q-col-gutter-md">
