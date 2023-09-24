@@ -34,7 +34,7 @@ export default boot(({ app, store, ssrContext }) => {
   app.mixin({
     data() {
       return {
-        adsense_show: true,
+        adsense_show: false,
 
         web_title: 'Musikalindo - We talk about music & infotainment | Breaking News | Music Videos | Entertainment News | Hip Hop News',
         web_description: 'Musikalindo situs musik terlengkap di indonesia, berita musik, lirik lagu, RBT, foto penyanyi, jadwal konser - Musikalindo.com',
