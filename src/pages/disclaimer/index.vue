@@ -25,7 +25,7 @@ import { metaDataStatic } from "boot/meta"
 export default defineComponent({
   mixins: [
     createMetaMixin(function () {
-      return metaDataStatic(this.web_title, this.web_description)
+      return metaDataStatic(this.web_title, this.web_description, this.web_keyword)
     })
   ],
   name: 'DisclaimerIndex',

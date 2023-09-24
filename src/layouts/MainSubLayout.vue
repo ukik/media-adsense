@@ -1,6 +1,6 @@
 <template>
   <q-page class="col-12 row flex justify-center items-start">
-    <q-page-scroller style="z-index: 999;" position="bottom-right" :scroll-offset="150" :offset="$q.screen.width <= 425 ? [18, 60] : [18, 18]">
+    <q-page-scroller style="z-index: 99999;" position="bottom-right" :scroll-offset="150" :offset="$q.screen.width <= 425 ? [18, 60] : [18, 18]">
       <q-btn fab icon="arrow_upward" color="pink" dense />
     </q-page-scroller>
 

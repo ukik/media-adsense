@@ -36,8 +36,9 @@ export default boot(({ app, store, ssrContext }) => {
       return {
         adsense_show: true,
 
-        web_title: 'FreeUdemyCourse',
-        web_description: 'Download Udemy Paid Courses for Free. Learn Hacking, Programming, IT &amp; Software, Marketing, Music, Free Online Courses, and more.',
+        web_title: 'Musikalindo - We talk about music & infotainment | Breaking News | Music Videos | Entertainment News | Hip Hop News',
+        web_description: 'Musikalindo situs musik terlengkap di indonesia, berita musik, lirik lagu, RBT, foto penyanyi, jadwal konser - Musikalindo.com',
+        web_keyword: 'music charts, news, photos, video, infotainment, gosip, artis, indonesia, internasional, game, entertainment, film, resensi, musik, zodiac, kartu ucapan, berita musik, lirik lagu, foto penyanyi, jadwal konser, pop, jazz, edm, funk, r&b, dangdut, hiphop, alternative, experimental',
         // hostname: ssrContext
         // fb_yuvoria_url: 'https://www.facebook.com/TheWickedAvatar',
         // ig_yuvoria_url: 'https://www.instagram.com/yuvoria.official',

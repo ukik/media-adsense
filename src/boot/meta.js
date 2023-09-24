@@ -1,6 +1,20 @@
-export const metaData = function (post, title, description) {
+export const metaData = function (post, title, description, keyword) {
+  function getExtends(arr, type) {
+    // type = category || post_tag
+    let temp_arr = []
+    for (let i = 0; i < arr?.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        // console.log(arr[i][j]['taxonomy'], type)
+        if(arr[i][j]['taxonomy'] == type) {
+          temp_arr.push(arr[i][j]['name'])
+        }
+      }
+    }
+    return temp_arr.toString()
+  }
+
   return {
-    title: `${title} - ${description}`,
+    title: `${title} - ${post?.title?.rendered}`,
     // sets document title
     // title: 'Index Page',
     // optional; sets final title as "Index Page - My Website", useful for multiple level meta
@@ -9,7 +23,7 @@ export const metaData = function (post, title, description) {
     // meta tags
     meta: {
       description: { name: 'description', content: `${description} - ${post?.excerpt?.rendered}` },
-      keywords: { name: 'keywords', content: `${description} - ${post?.excerpt?.rendered}` },
+      keywords: { name: 'keywords', content: `${keyword}, ${getExtends(post?.extends, 'category')}, ${getExtends(post?.extends, 'post_tag')}` },
       equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
       robots: { name: 'robots', content: "follow, index" },
       // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
@@ -28,13 +42,13 @@ export const metaData = function (post, title, description) {
       ogTitle: {
         property: 'og:title',
         template(ogTitle) {
-          return `${ogTitle} ${title} - ${description}`
+          return `${title} - ${post?.title?.rendered}`
         }
       },
       ogKeyword: {
         property: 'og:keyword',
         template(ogTitle) {
-          return `${description} - ${post?.excerpt?.rendered}`
+          return `${keyword}, ${getExtends(post?.extends, 'category')}, ${getExtends(post?.extends, 'post_tag')}`
         }
       },
       ogDescription: {
@@ -46,19 +60,19 @@ export const metaData = function (post, title, description) {
       ogUrl: {
         property: 'og:url',
         template(ogTitle) {
-          return `https://FreeUdemyCourse.com/`
+          return `https://musikalindo.com/`
         }
       },
       ogSiteName: {
         property: 'og:site_name',
         template(ogTitle) {
-          return `FreeUdemyCourse`
+          return `musikalindo`
         }
       },
     },
 
     link: {
-      material: { rel: 'canonical', href: 'https://FreeUdemyCourse.com/' }
+      material: { rel: 'canonical', href: 'https://musikalindo.com/' }
     },
 
 
@@ -94,14 +108,14 @@ export const metaData = function (post, title, description) {
   }
 }
 
-export const metaDataStatic = function (post, title, description) {
+export const metaDataStatic = function (post, title, description, keyword) {
   return {
-    title: `${title} - ${description}`,
+    title: `${title}`,
 
     // meta tags
     meta: {
-      description: { name: 'description', content: `${title} - ${description}` },
-      keywords: { name: 'keywords', content: `${title} - ${description}` },
+      description: { name: 'description', content: `${description}` },
+      keywords: { name: 'keywords', content: `${keyword}` },
       equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
       robots: { name: 'robots', content: "follow, index" },
       // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
@@ -120,37 +134,37 @@ export const metaDataStatic = function (post, title, description) {
       ogTitle: {
         property: 'og:title',
         template(ogTitle) {
-          return `${ogTitle} ${title} - ${description}`
+          return `${title}`
         }
       },
       ogKeyword: {
         property: 'og:keyword',
         template(ogTitle) {
-          return `${title} - ${description}`
+          return `${keyword}`
         }
       },
       ogDescription: {
         property: 'og:description',
         template(ogTitle) {
-          return `${title} - ${description}`
+          return `${description}`
         }
       },
       ogUrl: {
         property: 'og:url',
         template(ogTitle) {
-          return `https://FreeUdemyCourse.com/`
+          return `https://musikalindo.com/`
         }
       },
       ogSiteName: {
         property: 'og:site_name',
         template(ogTitle) {
-          return `FreeUdemyCourse`
+          return `musikalindo`
         }
       },
     },
 
     link: {
-      material: { rel: 'canonical', href: 'https://FreeUdemyCourse.com/' }
+      material: { rel: 'canonical', href: 'https://musikalindo.com/' }
     },
   }
 }

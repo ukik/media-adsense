@@ -14,7 +14,12 @@
 
   <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pa-md text-h5">{{ get_post?.title?.rendered }}</div>
 
-  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pb-sm q-px-md text-caption text-grey">
+  <q-breadcrumbs class="q-px-md q-pb-md text-capitalize">
+    <q-breadcrumbs-el label="Artikel" icon="widgets" />
+    <q-breadcrumbs-el :label="$route.params.slug" />
+  </q-breadcrumbs>
+
+  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pb-md q-px-md text-caption text-grey row flex items-center">
     By
     <RouterLink :to="{
       name: 'author',
@@ -39,6 +44,10 @@
         date: get_post?.modified,
       }
     }" class="text-bold">{{ get_date }}</RouterLink>
+    <q-space />
+    <q-btn v-show="init ||  get_post?.title && !loading"  :href="`${$route.path}#comments`" color="primary" flat dense icon="comment"
+      :label="get_post?.get_comment_count?.approved" />
+
   </div>
 
   <!-- <q-breadcrumbs class="q-px-md q-pb-md">
@@ -56,12 +65,10 @@
     <div>
       <q-btn color="orange" rounded unelevated size="sm" no-caps icon="mail" label="Email" />
     </div> -->
-    <q-btn v-show="init ||  get_post?.title && !loading"  :href="`${$route.path}#comments`" color="primary" flat dense icon="comment"
-      :label="get_post?.get_comment_count?.approved" />
 
-    <q-space />
-
-    <div style="z-index: 9;" :class="[ $q.screen.width <= 1024 ? 'q-mt-md full-width' : '']" class="sharethis-inline-share-buttons"></div>
+    <!-- <q-space /> -->
+    <!-- :class="[ $q.screen.width <= 1024 ? 'q-mt-md full-width' : '']"  -->
+    <div style="z-index: 9;" class="sharethis-inline-share-buttons"></div>
     <!-- <div class="fb-share-button " :data-href="domain" data-layout="button_count"></div> -->
   </div>
 
@@ -117,6 +124,28 @@
 
   </div>
 
+  <div class="q-mx-md q-mb-lg text-h6">Categories</div>
+
+  <div class="col-12 q-pb-lg q-pl-md">
+    <template v-for="(item, index) in getExtends(get_post?.extends, 'category')">
+      <q-btn :to="{
+        name: 'tag',
+        params: {
+          slug: item?.slug
+        },
+        query: {
+          current_page: tag_current_page,
+          order: tag_order,
+          per_page: 1,
+          keyword: tag_keyword,
+          tag: item?.term_id,
+        }
+      }" no-caps :label="'' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+    </template>
+  </div>
+
+  <div class="q-mx-md q-mb-lg text-h6">Tags</div>
+
   <div class="col-12 q-pb-lg q-pl-md">
     <template v-for="(item, index) in getExtends(get_post?.extends, 'post_tag')">
       <q-btn :to="{
@@ -167,7 +196,7 @@ export default defineComponent({
     // createMetaMixin(metaData(this.get_post))
     createMetaMixin(function () {
       // "this" here refers to your component
-      return metaData(this.get_post, this.web_title, this.web_description)
+      return metaData(this.get_post, this.web_title, this.web_description, this.web_keyword)
       // return {
       //   // assuming `this.myTitle` exists in your mixed in component
       //   title: this.get_post?.title?.rendered
