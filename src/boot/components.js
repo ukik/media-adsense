@@ -23,6 +23,8 @@ import { useStore as useStoreGLOBAL } from 'src/stores/GLOBAL'
 
 // import {VueRecaptcha} from 'vue-recaptcha';
 
+// import VRuntimeTemplate from "vue3-runtime-template";
+
 const shuffle = (array) => {
   return array.map((a) => ({ sort: Math.random(), value: a }))
       .sort((a, b) => a.sort - b.sort)
@@ -180,6 +182,13 @@ export default boot(({ app, store, ssrContext }) => {
   });
 
   // app.component('VueRecaptcha', VueRecaptcha)
+  app.component('VRuntimeTemplate',
+    defineAsyncComponent(() => import('vue3-runtime-template'))
+  )
+
+  app.component('VRuntimeTemplateSample',
+    defineAsyncComponent(() => import('src/components/VRuntimeTemplateSample.vue'))
+  )
 
   app.component('CardPost',
     defineAsyncComponent(() => import('src/components/CardPost.vue'))

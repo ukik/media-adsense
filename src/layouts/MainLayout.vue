@@ -42,6 +42,7 @@
     </q-drawer>
 
     <q-page-container class="bg-grey-3 row flex justify-center">
+      <v-runtime-template :template="runtime_templte"></v-runtime-template>
       <router-view :loading="loading" :positionY="positionY" :items="items_random" />
     </q-page-container>
   </q-layout>
@@ -76,7 +77,8 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-      positionY: ref(0)
+      positionY: ref(0),
+      runtime_templte:"<VRuntimeTemplate />"
     }
   },
   computed: {
@@ -134,11 +136,11 @@ export default defineComponent({
       // return today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
     },
     onLoadHome() {
-      const currentRoute = this.$route
-      const current_page = this.home_current_page ? this.home_current_page : Number(currentRoute.query.current_page)
-      const order = this.home_order ? this.home_order : currentRoute.query.order
-      const per_page = this.home_per_page ? this.home_per_page : Number(currentRoute.query.per_page)
-      const keyword = this.home_keyword ? this.home_keyword : currentRoute.query.keyword
+      const currentRoute = this.$route.query
+      const current_page = Number(currentRoute.current_page) ? Number(currentRoute.current_page) : this.home_current_page
+      const order = currentRoute.order ? currentRoute.order : this.home_order
+      const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.home_per_page
+      const keyword = currentRoute.keyword ? currentRoute.keyword : this.home_keyword
 
       this.onRetrieve({
         current_page,
@@ -148,12 +150,19 @@ export default defineComponent({
       })
     },
     onLoadCategory() {
-      const currentRoute = this.$route
-      const current_page = this.category_current_page ? this.category_current_page : Number(currentRoute.query.current_page)
-      const order = this.category_order ? this.category_order : currentRoute.query.order
-      const per_page = this.category_per_page ? this.category_per_page : Number(currentRoute.query.per_page)
-      const keyword = this.category_keyword ? this.category_keyword : currentRoute.query.keyword
-      const category = this.category_category ? this.category_category : currentRoute.query.category
+      // const currentRoute = this.$route
+      // const current_page = this.category_current_page ? this.category_current_page : Number(currentRoute.query.current_page)
+      // const order = this.category_order ? this.category_order : currentRoute.query.order
+      // const per_page = this.category_per_page ? this.category_per_page : Number(currentRoute.query.per_page)
+      // const keyword = this.category_keyword ? this.category_keyword : currentRoute.query.keyword
+      // const category = this.category_category ? this.category_category : currentRoute.query.category
+
+      const currentRoute = this.$route.query
+      const current_page = Number(currentRoute.current_page) ? Number(currentRoute.current_page) : this.category_current_page
+      const order = currentRoute.order ? currentRoute.order : this.category_order
+      const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.category_per_page
+      const keyword = currentRoute.keyword ? currentRoute.keyword : this.category_keyword
+      const category = currentRoute.category ? currentRoute.category : this.category_category
 
       this.onRetrieveCategories({
         current_page,
@@ -164,12 +173,19 @@ export default defineComponent({
       })
     },
     onLoadDate() {
-      const currentRoute = this.$route
-      const current_page = this.date_current_page ? this.date_current_page : Number(currentRoute.query.current_page)
-      const order = this.date_order ? this.date_order : currentRoute.query.order
-      const per_page = this.date_per_page ? this.date_per_page : Number(currentRoute.query.per_page)
-      const keyword = this.date_keyword ? this.date_keyword : currentRoute.query.keyword
-      const date = this.date_date ? this.date_date : currentRoute.query.date
+      // const currentRoute = this.$route
+      // const current_page = this.date_current_page ? this.date_current_page : Number(currentRoute.query.current_page)
+      // const order = this.date_order ? this.date_order : currentRoute.query.order
+      // const per_page = this.date_per_page ? this.date_per_page : Number(currentRoute.query.per_page)
+      // const keyword = this.date_keyword ? this.date_keyword : currentRoute.query.keyword
+      // const date = this.date_date ? this.date_date : currentRoute.query.date
+
+      const currentRoute = this.$route.query
+      const current_page = Number(currentRoute.current_page) ? Number(currentRoute.current_page) : this.date_current_page
+      const order = currentRoute.order ? currentRoute.order : this.date_order
+      const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.date_per_page
+      const keyword = currentRoute.keyword ? currentRoute.keyword : this.date_keyword
+      const date = currentRoute.date ? currentRoute.date : this.date_date
 
       this.onRetrieveDate({
         current_page,
@@ -180,12 +196,19 @@ export default defineComponent({
       })
     },
     onLoadTag() {
-      const currentRoute = this.$route
-      const current_page = this.tag_current_page ? this.tag_current_page : Number(currentRoute.query.current_page)
-      const order = this.tag_order ? this.tag_order : currentRoute.query.order
-      const per_page = this.tag_per_page ? this.tag_per_page : Number(currentRoute.query.per_page)
-      const keyword = this.tag_keyword ? this.tag_keyword : currentRoute.query.keyword
-      const tag = this.tag_tag ? this.tag_tag : currentRoute.query.tag
+      // const currentRoute = this.$route
+      // const current_page = this.tag_current_page ? this.tag_current_page : Number(currentRoute.query.current_page)
+      // const order = this.tag_order ? this.tag_order : currentRoute.query.order
+      // const per_page = this.tag_per_page ? this.tag_per_page : Number(currentRoute.query.per_page)
+      // const keyword = this.tag_keyword ? this.tag_keyword : currentRoute.query.keyword
+      // const tag = this.tag_tag ? this.tag_tag : currentRoute.query.tag
+
+      const currentRoute = this.$route.query
+      const current_page = Number(currentRoute.current_page) ? Number(currentRoute.current_page) : this.tag_current_page
+      const order = currentRoute.order ? currentRoute.order : this.tag_order
+      const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.tag_per_page
+      const keyword = currentRoute.keyword ? currentRoute.keyword : this.tag_keyword
+      const tag = currentRoute.date ? currentRoute.date : this.tag_tag
 
       this.onRetrieveTag({
         current_page,
@@ -196,12 +219,19 @@ export default defineComponent({
       })
     },
     onLoadAuthor() {
-      const currentRoute = this.$route
-      const current_page = this.author_current_page ? this.author_current_page : Number(currentRoute.query.current_page)
-      const order = this.author_order ? this.author_order : currentRoute.query.order
-      const per_page = this.author_per_page ? this.author_per_page : Number(currentRoute.query.per_page)
-      const keyword = this.author_keyword ? this.author_keyword : currentRoute.query.keyword
-      const author = this.author_tag ? this.author_tag : currentRoute.query.author
+      // const currentRoute = this.$route
+      // const current_page = this.author_current_page ? this.author_current_page : Number(currentRoute.query.current_page)
+      // const order = this.author_order ? this.author_order : currentRoute.query.order
+      // const per_page = this.author_per_page ? this.author_per_page : Number(currentRoute.query.per_page)
+      // const keyword = this.author_keyword ? this.author_keyword : currentRoute.query.keyword
+      // const author = this.author_tag ? this.author_tag : currentRoute.query.author
+
+      const currentRoute = this.$route.query
+      const current_page = Number(currentRoute.current_page) ? Number(currentRoute.current_page) : this.author_current_page
+      const order = currentRoute.order ? currentRoute.order : this.author_order
+      const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.author_per_page
+      const keyword = currentRoute.keyword ? currentRoute.keyword : this.author_keyword
+      const author = currentRoute.date ? currentRoute.date : this.author_tag
 
       this.onRetrieveTag({
         current_page,
