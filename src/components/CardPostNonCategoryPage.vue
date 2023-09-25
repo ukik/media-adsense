@@ -98,10 +98,30 @@
         />
       </q-card-actions>
 
-      <q-slide-transition v-if="getExtends(item?.extends, 'post_tag')">
+      <q-slide-transition v-if="getExtends(item?.extends, 'post_tag') || getExtends(item?.extends, 'category')">
         <div v-show="expanded">
           <q-separator />
-          <q-card-section class="text-subtitle2">
+          <q-card-section class="text-caption">
+            <span>Categories: </span>
+            <template v-for="(val, index) in getExtends(item?.extends, 'category')">
+              <q-btn :to="{
+                name: 'category',
+                params: {
+                  slug: val?.slug
+                },
+                query: {
+                  current_page: category_current_page,
+                  order: category_order,
+                  per_page: 1,
+                  keyword: category_keyword,
+                  category: val?.term_id,
+                }
+              }" no-caps :label="'' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+            </template>
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="text-caption">
+            <span>Tags: </span>
             <template v-for="(val, index) in getExtends(item?.extends, 'post_tag')">
               <q-btn :to="{
                 name: 'tag',

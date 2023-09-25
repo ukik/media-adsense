@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import { date as qdate } from 'quasar'
 
 export const host = 'https://blog.musikalindo.com/wp-json/wp/v2/' // 'http://wp-rest-api.local/wp-json/wp/v2/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
@@ -23,7 +23,7 @@ import { useStore as useStoreGLOBAL } from 'src/stores/GLOBAL'
 
 // import {VueRecaptcha} from 'vue-recaptcha';
 
-// import VRuntimeTemplate from "vue3-runtime-template";
+import VRuntimeTemplate from "vue3-runtime-template";
 
 const shuffle = (array) => {
   return array.map((a) => ({ sort: Math.random(), value: a }))
@@ -182,9 +182,9 @@ export default boot(({ app, store, ssrContext }) => {
   });
 
   // app.component('VueRecaptcha', VueRecaptcha)
-  app.component('VRuntimeTemplate',
-    defineAsyncComponent(() => import('vue3-runtime-template'))
-  )
+  // app.component('VRuntimeTemplate',
+  //   defineComponent(VRuntimeTemplate)
+  // )
 
   app.component('VRuntimeTemplateSample',
     defineAsyncComponent(() => import('src/components/VRuntimeTemplateSample.vue'))

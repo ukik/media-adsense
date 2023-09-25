@@ -1,6 +1,32 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card">
+    <v-runtime-template :template="runtime_templte"></v-runtime-template>
+  </div>
+</template>
+
+<script>
+import VRuntimeTemplate from "vue3-runtime-template";
+
+export default {
+  setup () {
+    return {
+      // lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    }
+  },
+  components: {
+    VRuntimeTemplate
+  },
+  methods: {
+    onAlert() {
+      alert('xxx')
+    }
+  },
+  data() {
+    return {
+      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      runtime_templte:
+      `
+      <q-card class="my-card">
       <img src="https://cdn.quasar.dev/img/mountains.jpg">
 
       <q-card-section>
@@ -9,7 +35,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        {{ lorem }}
+        zzzzz {{ lorem }}
       </q-card-section>
     </q-card>
 
@@ -75,18 +101,12 @@
       </q-img>
 
       <q-card-actions>
-        <q-btn flat>Action 1</q-btn>
+        <q-btn @click="onAlert" flat>Action 1</q-btn>
         <q-btn flat>Action 2</q-btn>
       </q-card-actions>
     </q-card>
-  </div>
-</template>
 
-<script>
-export default {
-  setup () {
-    return {
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      `
     }
   }
 }

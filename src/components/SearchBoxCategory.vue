@@ -10,7 +10,7 @@
     <!-- <q-space /> -->
     <q-form @submit="onSubmit" @keyup.enter="onSubmit">
 
-      <q-input clearable @clear="onDelete" :disable="loading" square class="" v-model="keyword" outlined placeholder="Type your keyword..."
+      <q-input clearable @clear="onDelete" :disable="loading" square class="" v-model="keyword" outlined placeholder="Category: type your keyword..."
         input-class="text-left">
         <template v-slot:append>
           <q-btn @click="onSubmit" :disable="loading" :loading="loading" square unelevated color="red" label="search" />

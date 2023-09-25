@@ -42,7 +42,6 @@
     </q-drawer>
 
     <q-page-container class="bg-grey-3 row flex justify-center">
-      <v-runtime-template :template="runtime_templte"></v-runtime-template>
       <router-view :loading="loading" :positionY="positionY" :items="items_random" />
     </q-page-container>
   </q-layout>
@@ -78,7 +77,6 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       positionY: ref(0),
-      runtime_templte:"<VRuntimeTemplate />"
     }
   },
   computed: {
@@ -208,7 +206,7 @@ export default defineComponent({
       const order = currentRoute.order ? currentRoute.order : this.tag_order
       const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.tag_per_page
       const keyword = currentRoute.keyword ? currentRoute.keyword : this.tag_keyword
-      const tag = currentRoute.date ? currentRoute.date : this.tag_tag
+      const tag = currentRoute.tag ? currentRoute.tag : this.tag_tag
 
       this.onRetrieveTag({
         current_page,
@@ -231,9 +229,9 @@ export default defineComponent({
       const order = currentRoute.order ? currentRoute.order : this.author_order
       const per_page = Number(currentRoute.per_page) ? Number(currentRoute.per_page) : this.author_per_page
       const keyword = currentRoute.keyword ? currentRoute.keyword : this.author_keyword
-      const author = currentRoute.date ? currentRoute.date : this.author_tag
+      const author = currentRoute.author ? currentRoute.author : this.author_tag
 
-      this.onRetrieveTag({
+      this.onRetrieveAuthor({
         current_page,
         order,
         per_page,
@@ -314,7 +312,7 @@ export default defineComponent({
   },
   mounted() {
     this.onGlobalCategories()
-    // this.onGlobalTags()
+    this.onGlobalTags()
     this.onGlobalPost()
 
     setInterval(() => {

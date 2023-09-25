@@ -30,9 +30,14 @@
               name: 'category',
               params: { slug: item.slug },
               query: {
+                // current_page: category_current_page,
+                // order: category_order,
+                // per_page: category_per_page,
+                // keyword: category_keyword,
+                // category: item.id,
                 current_page: category_current_page,
                 order: category_order,
-                per_page: category_per_page,
+                per_page: 1,
                 keyword: category_keyword,
                 category: item.id,
               }
@@ -45,7 +50,34 @@
         </q-list>
       </q-menu>
     </q-btn>
-
+    <q-btn v-show="!loading_tags" :disable="loading_tags" unelevated square flat color="white" icon="label" label="Tags">
+      <q-menu auto-close square>
+        <q-list id="top-menu" separator style="min-width: 100px">
+          <template v-for="(item, index) in tags">
+            <q-item active-class="bg-red text-white" :active="item?.slug == $route.params.slug" :to="{
+              name: 'tag',
+              params: { slug: item.slug },
+              query: {
+                // current_page: tag_current_page,
+                // order: tag_order,
+                // per_page: tag_per_page,
+                // keyword: category_keyword,
+                // category: item.id,
+                current_page: tag_current_page,
+                order: tag_order,
+                per_page: 1,
+                keyword: tag_keyword,
+                tag: item.id,
+              }
+            }" dense clickable class="q-py-sm">
+              <q-item-section>
+                <q-item-label class="text-capitalize">{{ item?.name }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-list>
+      </q-menu>
+    </q-btn>
     <!-- <q-btn unelevated square flat color="white" icon="bookmark" label="How to download" /> -->
     <q-btn :to="{ name:'contact' }" unelevated square flat color="white" icon="account_box" label="Contact Us" />
     <q-space />
@@ -60,13 +92,15 @@ import { useStore as useStoreGLOBAL } from 'src/stores/GLOBAL'
 
 import { useStore as useStoreHome } from 'src/stores/home-store'
 import { useStore as useStoreCategory } from 'src/stores/category-store'
+import { useStore as useStoreTag } from 'src/stores/tag-store'
 
 export default {
   computed: {
     ...mapState(useStoreGLOBAL, [
       'tags',
       'categories',
-      'loading_categories'
+      'loading_categories',
+      'loading_tags',
     ]),
     ...mapState(useStoreHome, {
       // items: 'items',
@@ -83,70 +117,17 @@ export default {
       category_keyword: 'keyword',
       category_category: 'category',
     }),
+    ...mapState(useStoreTag, {
+      // items_categories: 'items_categories',
+      tag_current_page: 'current_page',
+      tag_order: 'order',
+      tag_per_page: 'per_page',
+      tag_keyword: 'keyword',
+      tag_category: 'category',
+    }),
 
 
   },
-  data() {
-    return {
-      items: [
-        {
-          label: 'ZeroToMastery',
-          link: 'zero-to-mastery',
-        },
-        {
-          label: 'Academics',
-          link: 'academics',
-        },
-        {
-          label: 'Business',
-          link: 'business',
-        },
-        {
-          label: 'Design',
-          link: 'design',
-        },
-        {
-          label: 'Development',
-          link: 'development',
-        },
-        {
-          label: 'Health &amp; Fitness',
-          link: 'health-fitness',
-        },
-        {
-          label: 'IT &amp; Software',
-          link: 'it-software',
-        },
-        {
-          label: 'Language',
-          link: 'language',
-        },
-        {
-          label: 'Lifestyle',
-          link: 'lifestyle',
-        },
-        {
-          label: 'Marketing',
-          link: 'marketing',
-        },
-        {
-          label: 'Music',
-          link: 'music',
-        },
-        {
-          label: 'Office Productivity',
-          link: 'office-productivity',
-        },
-        {
-          label: 'Personal Development',
-          link: 'personal-development',
-        },
-        {
-          label: 'Photography',
-          link: 'photography',
-        },
-      ]
-    }
-  }
+
 }
 </script>

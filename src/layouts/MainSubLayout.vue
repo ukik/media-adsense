@@ -28,6 +28,8 @@
       <div class="col-xl-8 col-lg-8 col-md-8 col-sm-7 col-xs-12 row">
         <!-- <SearchBox /> -->
 
+        <!-- <VRuntimeTemplateSample /> -->
+
         <RouterView />
 
       </div>
