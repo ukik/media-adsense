@@ -37,11 +37,13 @@
 
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
       </q-list> -->
-
-      <LeftDrawer />
+      <q-no-ssr>
+        <LeftDrawer />
+      </q-no-ssr>
     </q-drawer>
 
     <q-page-container class="bg-grey-3 row flex justify-center">
+      {{ $t('failed') }}
       <router-view :loading="loading" :positionY="positionY" :items="items_random" />
     </q-page-container>
   </q-layout>
@@ -67,6 +69,26 @@ export default defineComponent({
     '$route.query': function () {
       this.onLoad()
     },
+    '$route.params.locale': function(val) {
+      console.log('local', this.$i18n)
+
+      switch (val) {
+        case 'id':
+          this.$i18n.locale = 'id-ID'
+          // await global.setLocale('id-ID')
+          break;
+        case 'en':
+          this.$i18n.locale = 'en-US'
+          // await global.setLocale('en-US')
+          break;
+      }
+
+      this.init_categories = false
+      this.init_tags = false
+      this.onGlobalCategories()
+      this.onGlobalTags()
+      this.randomPost()
+    }
   },
   setup() {
     const leftDrawerOpen = ref(false)
@@ -77,9 +99,13 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       positionY: ref(0),
+      randomPostInterval: ref(null)
     }
   },
   computed: {
+    ...mapWritableState(useStoreGLOBAL, [
+      'init_categories','init_tags',
+    ]),
     ...mapState(useStoreGLOBAL, [
       'tags', 'categories', 'items_random', 'loading'
     ]),
@@ -128,6 +154,14 @@ export default defineComponent({
   },
 
   methods: {
+    randomPost() {
+      this.onGlobalPost()
+      clearInterval(this.randomPostInterval)
+      this.randomPostInterval = setInterval(() => {
+        this.onGlobalPost()
+      }, 30000);
+
+    },
     dateNow() {
       const today = new Date();
       return qdate.formatDate(today, 'dddd, DD MMM YYYY')
@@ -243,7 +277,8 @@ export default defineComponent({
       const currentRoute = this.$route
 
       this.onRetrievePost({
-        slug: currentRoute.params.slug
+        slug: currentRoute.params.slug,
+        id: currentRoute.params.id,
       })
     },
     onLoad() {
@@ -313,12 +348,8 @@ export default defineComponent({
   mounted() {
     this.onGlobalCategories()
     this.onGlobalTags()
-    this.onGlobalPost()
 
-    setInterval(() => {
-      this.onGlobalPost()
-    }, 30000);
-
+    this.randomPost()
     return
     document.addEventListener('deviceready', function () {
 

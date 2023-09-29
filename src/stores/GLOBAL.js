@@ -5,10 +5,13 @@ import { Loading, Notify, Cookies, QSpinnerClock, Platform } from 'quasar'
 
 // import { errorNotify } from 'src/boot/client_side';
 
-import { host } from 'src/boot/components';
+
 
 export const useStore = defineStore('GLOBAL', {
   state: () => ({
+    isLocaleInstalled: false,
+    locale: 'id-ID',
+
     categories: [],
     tags: [],
     items_random: [],
@@ -26,6 +29,15 @@ export const useStore = defineStore('GLOBAL', {
     // }
   },
   actions: {
+    async setLocale(val = null) {
+      if(!val) return
+      this.locale = val
+    },
+    async setLocaleInstalled(val) {
+      // if(!isLocaleInstalled) return
+      this.isLocaleInstalled = val
+    },
+
     async onGlobalPost(payload = null) {
       const vm = this
 
@@ -33,9 +45,9 @@ export const useStore = defineStore('GLOBAL', {
 
       vm.loading = true
 
-      const items = await axios.get(host+`posts?per_page=6&rand`)
+      const items = await axios.get(`posts?per_page=6&rand`)
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -47,7 +59,7 @@ export const useStore = defineStore('GLOBAL', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
@@ -67,13 +79,13 @@ export const useStore = defineStore('GLOBAL', {
 
       vm.loading_categories = true
 
-      const items = await axios.get(host+`categories`,{
+      const items = await axios.get(`categories`,{
           // params: {
           //   ID: 12345
           // }
         })
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -85,7 +97,7 @@ export const useStore = defineStore('GLOBAL', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
@@ -106,13 +118,13 @@ export const useStore = defineStore('GLOBAL', {
 
       vm.loading_tags = true
 
-      const items = await axios.get(host+`tags`,{
+      const items = await axios.get(`tags`,{
           // params: {
           //   ID: 12345
           // }
         })
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -124,7 +136,7 @@ export const useStore = defineStore('GLOBAL', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });

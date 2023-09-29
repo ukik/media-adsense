@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import { defineAsyncComponent, defineComponent } from 'vue'
 import { date as qdate } from 'quasar'
 
-export const host = 'https://blog.musikalindo.com/wp-json/wp/v2/' // 'http://wp-rest-api.local/wp-json/wp/v2/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
+// export const host = 'https://id.musikalindo.com/wp-json/wp/v2/' // 'http://wp-rest-api.local/wp-json/wp/v2/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
 export const host_laravel = 'http://wp-rest-api-laravel.musikalindo.com/api/' //'http://localhost:8000/api/'//'https://api.imajora.labsnip.com/', 'https://api.imajora.labsnip.com/', //
 
 
@@ -54,7 +54,7 @@ export default boot(({ app, store, ssrContext }) => {
         domain: function() {
           return process.env.CLIENT ? window.location.host : ssrContext.req.headers.host
         }(),
-        host: host,
+        // host: host,
         host_laravel: host_laravel,
         no_image: "/images/no-image.jpg",
         _per_page: per_page,
@@ -178,6 +178,16 @@ export default boot(({ app, store, ssrContext }) => {
         }
         return temp_arr
       }
+    },
+    computed: {
+      is_ssr() {
+        return process.env.MODE == "ssr";
+        // return process.env.mode
+      },
+      is_server() {
+        return process.env.SERVER;
+        // return process.env.mode
+      },
     }
   });
 
@@ -201,6 +211,23 @@ export default boot(({ app, store, ssrContext }) => {
   app.component('CardPostNonCategoryPage',
     defineAsyncComponent(() => import('src/components/CardPostNonCategoryPage.vue'))
   )
+
+  app.component('RightTags',
+    defineAsyncComponent(() => import('src/components/RightTags.vue'))
+  )
+
+  app.component('RightCategories',
+    defineAsyncComponent(() => import('src/components/RightCategories.vue'))
+  )
+
+  app.component('PaginationMenuCategories',
+    defineAsyncComponent(() => import('src/components/PaginationMenuCategories.vue'))
+  )
+
+  app.component('PaginationMenuTags',
+    defineAsyncComponent(() => import('src/components/PaginationMenuTags.vue'))
+  )
+
 
   app.component('PaginationHome',
     defineAsyncComponent(() => import('src/components/PaginationHome.vue'))

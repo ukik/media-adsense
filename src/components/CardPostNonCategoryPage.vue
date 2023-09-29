@@ -3,7 +3,7 @@
     <q-card class="full-width" square flat bordered>
       <RouterLink v-if="item?.x_featured_media_medium" :to="{
         name: 'post',
-        params: { slug: item?.slug }
+        params: { slug: item?.slug, id: item?.id }
       }">
         <q-img :src="item?.x_featured_media_medium">
           <template v-slot:error>
@@ -13,9 +13,10 @@
           </template>
         </q-img>
       </RouterLink>
+
       <RouterLink v-else :to="{
         name: 'post',
-        params: { slug: item?.slug }
+        params: { slug: item?.slug, id: item?.id }
       }">
         <q-img :src="no_image" />
       </RouterLink>
@@ -24,16 +25,18 @@
         <q-btn :to="{
           name: 'category',
           params: {
-            slug: suffleArray(getExtends(item?.extends, 'category'))[0]?.slug
+            slug: get_suffle?.slug
           },
           query: {
             current_page: category_current_page,
             order: category_order,
-            per_page: 1,
+            per_page: _per_page,
             keyword: category_keyword,
-            category: suffleArray(getExtends(item?.extends, 'category'))[0]?.term_id,
+            category: get_suffle?.term_id,
           }
-        }" square :label="suffleArray(getExtends(item?.extends, 'category'))[0]?.name" color="pink" unelevated />
+        }" square color="pink" unelevated>
+          <span v-if="is_mounted">{{ get_suffle?.name }}</span>
+        </q-btn>
       </div>
 
       <q-separator />
@@ -54,7 +57,7 @@
           <q-space />
           <q-btn :to="{
                 name: 'post',
-                params: { slug: item?.slug },
+                params: { slug: item?.slug, id: item?.id },
                 query: {
                   'anchor':'comments'
                 }
@@ -66,8 +69,8 @@
             <q-item-label lines="2" style="height:48px;">
               <RouterLink :to="{
                 name: 'post',
-                params: { slug: item?.slug }
-              }">{{ item?.title?.rendered }}</RouterLink>
+                params: { slug: item?.slug, id: item?.id }
+              }" v-html="item?.title?.rendered"></RouterLink>
             </q-item-label>
           </q-item-section>
         </div>
@@ -112,11 +115,11 @@
                 query: {
                   current_page: category_current_page,
                   order: category_order,
-                  per_page: 1,
+                  per_page: _per_page,
                   keyword: category_keyword,
                   category: val?.term_id,
                 }
-              }" no-caps :label="'' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+              }" no-caps :label="'' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm q-ma-xs text-weight-regular" />
             </template>
           </q-card-section>
           <q-separator />
@@ -131,11 +134,11 @@
                 query: {
                   current_page: tag_current_page,
                   order: tag_order,
-                  per_page: 1,
+                  per_page: _per_page,
                   keyword: tag_keyword,
                   tag: val?.term_id,
                 }
-              }" no-caps :label="'#' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+              }" no-caps :label="'#' + val?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm q-ma-xs text-weight-regular" />
             </template>
           </q-card-section>
         </div>
@@ -158,6 +161,27 @@ import { useStore as useStoreTag } from 'src/stores/tag-store'
 export default {
   props: ['item'],
   computed: {
+    suffleArrayHere() {
+      return function(array) {
+        return array.map((a) => ({ sort: Math.random(), value: a }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((a) => a.value);
+        }
+    },
+    get_suffle() {
+      let extend = this.getExtends(this.item?.extends, 'category')
+      return extend[(Math.floor(Math.random() * extend.length))]
+
+      // let ext = JSON.stringify(this.item?.extends)
+      // ext = JSON.parse(ext)
+      // // const temp = this.suffleArrayHere(this.getExtends(this.item?.extends, 'category'))
+      // // return this.getExtends(this.item?.extends, 'category')
+      // let temp = (this.getExtends(ext, 'category'))
+      // return temp[0]
+      // // temp = this.suffleArrayHere(JSON.parse(temp))
+      // return JSON.stringify(temp[(Math.floor(Math.random() * temp.length))])
+      // // return temp[0]
+    },
     get_date() {
       if (!this.item?.modified) return 0
 
@@ -192,8 +216,12 @@ export default {
   },
   setup() {
     return {
+      is_mounted: ref(false),
       expanded: ref(false),
     }
   },
+  mounted() {
+    this.is_mounted = true
+  }
 }
 </script>

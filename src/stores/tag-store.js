@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { Loading, Notify, Cookies, QSpinnerClock, Platform } from 'quasar'
 
-import { host, getPreviousDay } from 'src/boot/components';
+
 
 export const useStore = defineStore('tag-store', {
   state: () => ({
@@ -44,13 +44,13 @@ export const useStore = defineStore('tag-store', {
         vm.tag = payload?.tag
       }
 
-      const items = await axios.get(host+`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}&tags=${vm.tag}`,{
+      const items = await axios.get(`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}&tags=${vm.tag}`,{
           params: {
             keyword: vm?.keyword
           }
         })
         .then(response => {
-          console.log('response', response)
+          // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -62,11 +62,11 @@ export const useStore = defineStore('tag-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading = false
 

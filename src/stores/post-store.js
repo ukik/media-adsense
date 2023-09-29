@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { Loading, Notify, Cookies, QSpinnerClock, Platform } from 'quasar'
 
-import { host, getPreviousDay } from 'src/boot/components';
+
 
 export const useStore = defineStore('post-store', {
   state: () => ({
@@ -39,9 +39,12 @@ export const useStore = defineStore('post-store', {
 
       vm.loading = true
 
-      const items = await axios.get(host + `posts?slug=${payload.slug}`)
+      // console.log('onRetrievePost', payload)
+
+      const items = await axios.get( `posts/${payload.id}`)
+      // const items = await axios.get( `posts?slug=${payload.slug}`)
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -53,17 +56,17 @@ export const useStore = defineStore('post-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading = false
 
       if (!items) return
 
-      vm.item = items?.data
+      vm.item = [ items?.data ]
 
       vm.init = true
     },
@@ -75,10 +78,10 @@ export const useStore = defineStore('post-store', {
 
       vm.loading_suggestion = true
 
-      // const items = await axios.get(host + `posts?per_page=6&rand`)
-      const items = await axios.get(host+`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`)
+      // const items = await axios.get( `posts?per_page=6&rand`)
+      const items = await axios.get(`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`)
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -90,11 +93,11 @@ export const useStore = defineStore('post-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading_suggestion = false
 

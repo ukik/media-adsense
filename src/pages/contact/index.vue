@@ -50,7 +50,7 @@ import { defineComponent } from 'vue'
 
 import { createMetaMixin } from 'quasar'
 import { metaDataStatic } from "boot/meta"
-
+import axios from 'axios'
 export default defineComponent({
   mixins: [
     createMetaMixin(function () {
@@ -118,6 +118,8 @@ export default defineComponent({
 
       const formData = new FormData()
 
+      formData.append('locale', vm.$route.params.locale)
+
       formData.append('form_id', vm.form_id)
       formData.append('name', vm.name)
       formData.append('email', vm.email)
@@ -130,7 +132,7 @@ export default defineComponent({
         console.log(pair[0] + ', ' + pair[1]);
       }
 
-      await vm.$axios.post(this.host_laravel + 'contact',
+      await axios.post(this.host_laravel + 'contact',
         formData,
         {
           // Config

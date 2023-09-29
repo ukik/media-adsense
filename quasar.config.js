@@ -23,13 +23,13 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
     boot: [
-      'i18n',
       'axios',
       'components',
       {
         path: 'clients',
         server: false,
-      }
+      },
+      'i18n',
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css

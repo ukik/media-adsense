@@ -5,7 +5,7 @@ import axios from 'axios'
 
 // import { errorNotify } from 'src/boot/client_side';
 
-import { host } from 'src/boot/components';
+
 
 export const useCounterStore = defineStore('search-store', {
   state: () => ({
@@ -32,7 +32,7 @@ export const useCounterStore = defineStore('search-store', {
     async onRetrieve() {
       const vm = this
       vm.loading = true
-      const items = await axios.get(host+`posts?page=${vm.current_page}&order=${vm.order}&per_page=${vm.per_page}&_fields=x_author,id,x_featured_media_medium,title,modified`,{
+      const items = await axios.get(`posts?page=${vm.current_page}&order=${vm.order}&per_page=${vm.per_page}&_fields=x_author,id,x_featured_media_medium,title,modified`,{
           params: {
             ID: 12345
           }
@@ -50,7 +50,7 @@ export const useCounterStore = defineStore('search-store', {
           // vm.subject = ''
           // vm.description = ''
           // vm.send = true
-          console.log('response', response)
+          // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -61,11 +61,11 @@ export const useCounterStore = defineStore('search-store', {
           //   color: "red"
           // })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading = false
 

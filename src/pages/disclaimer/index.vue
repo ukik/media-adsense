@@ -52,12 +52,6 @@ export default defineComponent({
       return date.formatDate(timeStamp, 'MMM, DD YYYY');
     },
   },
-  created() {
-    // this.onRetrieve()
-  },
-  mounted() {
-    // this.domain = "https://"+window.location.host+"/post/"+this.$route.params.slug;
-  },
   methods: {
     ...mapActions(useStore, [
       'onRetrievePost',

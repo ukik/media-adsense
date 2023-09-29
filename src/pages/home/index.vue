@@ -5,8 +5,8 @@
   </q-no-ssr>
 
   <div class="col-12 row q-col-gutter-md q-pl-md">
-    <NoData v-if="items.length <= 0 && !loading" />
-    <Preloading v-if="items.length <= 0 && loading" />
+    <!-- <NoData v-if="!is_server && items.length <= 0 && !loading" />
+    <Preloading v-if="!is_server && items.length <= 0 && loading" /> -->
     <template v-for="(item, index) in items">
       <CardPostNonCategoryPage :item="item" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"></CardPostNonCategoryPage>
     </template>

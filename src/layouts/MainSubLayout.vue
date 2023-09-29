@@ -72,7 +72,11 @@
               </div>
             </div>
 
+            <RightCategories v-if="index == 1" />
+
             <CardPostNonCategoryPage :item="item" class="col-12"></CardPostNonCategoryPage>
+
+            <RightTags v-if="index == 2" />
 
             <div v-if="adsense_show && index >= items.length-1" class="flex flex-center col-12 q-mt-md">
               <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:250px"
@@ -80,8 +84,8 @@
                 Adsense 3
               </div>
             </div>
-
           </template>
+
         </div>
 
 

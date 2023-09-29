@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { Loading, Notify, Cookies, QSpinnerClock, Platform } from 'quasar'
 
-import { host, getPreviousDay } from 'src/boot/components';
+
 
 export const useStore = defineStore('terms-of-use', {
   state: () => ({
@@ -23,9 +23,9 @@ export const useStore = defineStore('terms-of-use', {
 
       vm.loading = true
 
-      const items = await axios.get(host + `pages?slug=terms-of-use`)
+      const items = await axios.get( `pages?slug=terms-of-use`)
         .then(response => {
-          // console.log('response', response)
+          // // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -37,11 +37,11 @@ export const useStore = defineStore('terms-of-use', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading = false
 

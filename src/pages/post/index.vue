@@ -12,7 +12,7 @@
 
   <NoData v-if="get_post.length <= 0 && !loading" />
 
-  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pa-md text-h5">{{ get_post?.title?.rendered }}</div>
+  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pa-md text-h5" v-html="get_post?.title?.rendered"></div>
 
   <q-breadcrumbs class="q-px-md q-pb-md text-capitalize">
     <q-breadcrumbs-el label="Artikel" icon="widgets" />
@@ -20,7 +20,7 @@
   </q-breadcrumbs>
 
   <div v-show="init ||  get_post?.title && !loading" class="col-12 q-pb-md q-px-md text-caption text-grey row flex items-center">
-    By
+    By &nbsp;
     <RouterLink :to="{
       name: 'author',
       params: { slug: get_post?.x_author },
@@ -31,8 +31,8 @@
         keyword: author_keyword,
         author: get_post?.author,
       }
-    }" class="text-caption text-capitalize text-bold">{{ get_post?.x_author }}</RouterLink>
-    - On
+    }" class="text-caption text-capitalize text-bold"> {{ get_post?.x_author }}</RouterLink>
+    &nbsp; - On &nbsp;
     <RouterLink :to="{
       name: 'date',
       params: { slug: get_post?.modified },
@@ -98,9 +98,9 @@
   </div>
 
 
-  <div v-show="init ||  get_post?.title && !loading" class="col-12 q-px-md entry-content">
+  <div id="mypost" v-show="init ||  get_post?.title && !loading" class="col-12 q-px-md entry-content">
 
-    <h2>{{ get_post?.title?.rendered }}</h2>
+    <h2 v-html="get_post?.title?.rendered"></h2>
 
     <!-- <div class="q-pb-md col-12">
       <div class="adsbygoogle full-width bg-yellow" style="display:inline-block;width:100%;height:90px"
@@ -137,11 +137,11 @@
         query: {
           current_page: tag_current_page,
           order: tag_order,
-          per_page: 1,
+          per_page: _per_page,
           keyword: tag_keyword,
           tag: item?.term_id,
         }
-      }" no-caps :label="'' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+      }" no-caps :label="'' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm q-ma-xs text-weight-regular" />
     </template>
   </div>
 
@@ -157,11 +157,11 @@
         query: {
           current_page: tag_current_page,
           order: tag_order,
-          per_page: 1,
+          per_page: _per_page,
           keyword: tag_keyword,
           tag: item?.term_id,
         }
-      }" no-caps :label="'#' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm  text-weight-regular" />
+      }" no-caps :label="'#' + item?.name" outline square dense color="grey" text-color="grey-7"  class="q-px-sm q-ma-xs text-weight-regular" />
     </template>
   </div>
 
@@ -208,7 +208,8 @@ export default defineComponent({
     if (!process.env.SERVER) return
 
     await useStore(store).onRetrievePost({
-      slug: currentRoute.params.slug
+      slug: currentRoute.params.slug,
+      id: currentRoute.params.id,
     });
   }),
   components: {

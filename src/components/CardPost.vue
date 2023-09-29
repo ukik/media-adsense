@@ -3,7 +3,7 @@
     <q-card class="full-width" square flat bordered>
       <RouterLink v-if="item?.x_featured_media_medium" :to="{
         name: 'post',
-        params: { slug: item?.slug }
+        params: { slug: item?.slug, id: item?.id }
       }">
         <q-img :src="item?.x_featured_media_medium">
           <template v-slot:error>
@@ -15,7 +15,7 @@
       </RouterLink>
       <RouterLink v-else :to="{
         name: 'post',
-        params: { slug: item?.slug }
+        params: { slug: item?.slug, id: item?.id }
       }">
         <q-img :src="no_image" />
       </RouterLink>
@@ -29,7 +29,7 @@
           query: {
             current_page: category_current_page,
             order: category_order,
-            per_page: 1,
+            per_page: _per_page,
             keyword: category_keyword,
             category: getExtendsSpesificCategory(item?.extends, 'category', category)[0]?.term_id,
           }
@@ -43,7 +43,7 @@
           query: {
             current_page: category_current_page,
             order: category_order,
-            per_page: 1,
+            per_page: _per_page,
             keyword: category_keyword,
             category: suffleArray(getExtends(item?.extends, 'category'))?.term_id,
           }
@@ -69,7 +69,7 @@
           <q-space />
           <q-btn :to="{
                 name: 'post',
-                params: { slug: item?.slug },
+                params: { slug: item?.slug, id: item?.id },
                 query: {
                   'anchor':'comments'
                 }
@@ -81,7 +81,7 @@
             <q-item-label lines="2" style="height:48px;">
               <RouterLink :to="{
                 name: 'post',
-                params: { slug: item?.slug }
+                params: { slug: item?.slug, id: item?.id }
               }">{{ item?.title?.rendered }}</RouterLink>
             </q-item-label>
           </q-item-section>
@@ -126,7 +126,7 @@
                 query: {
                   current_page: tag_current_page,
                   order: tag_order,
-                  per_page: 1,
+                  per_page: _per_page,
                   keyword: tag_keyword,
                   tag: val?.term_id,
                 }

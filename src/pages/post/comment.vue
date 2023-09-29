@@ -75,7 +75,7 @@ import { defineComponent } from 'vue'
 import { date } from 'quasar'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 import { useStore } from 'src/stores/comment-store'
-
+import axios from 'axios'
 export default defineComponent({
   name: 'PostComment',
   props: ['id'],
@@ -177,6 +177,8 @@ export default defineComponent({
 
       const formData = new FormData()
 
+      formData.append('locale', vm.$route.params.locale)
+
       formData.append('comment_post_ID', vm.id)
       formData.append('comment_author', vm.comment_author)
       formData.append('comment_author_email', vm.comment_author_email)
@@ -191,7 +193,7 @@ export default defineComponent({
         console.log(pair[0] + ', ' + pair[1]);
       }
 
-      await vm.$axios.post(this.host_laravel + 'comment',
+      await axios.post(this.host_laravel + 'comment',
         formData,
         {
           // Config

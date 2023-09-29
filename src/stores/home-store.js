@@ -5,7 +5,7 @@ import { Loading, Notify, Cookies, QSpinnerClock, Platform } from 'quasar'
 
 // import { errorNotify } from 'src/boot/client_side';
 
-import { host, getPreviousDay } from 'src/boot/components';
+
 
 export const useStore = defineStore('home-store', {
   state: () => ({
@@ -35,8 +35,8 @@ export const useStore = defineStore('home-store', {
     async onRetrieve(payload = null) {
       const vm = this
 
-      console.log('x_wp_total', vm.x_wp_total)
-      console.log('max_pages', vm.max_pages*vm.per_page)
+      // console.log('x_wp_total', vm.x_wp_total)
+      // console.log('max_pages', vm.max_pages*vm.per_page)
 
       if(vm.loading) return
 
@@ -51,13 +51,13 @@ export const useStore = defineStore('home-store', {
         vm.keyword = payload?.keyword
       }
 
-      const items = await axios.get(host+`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`,{
+      const items = await axios.get(`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`,{
           params: {
             keyword: vm?.keyword
           }
         })
         .then(response => {
-          console.log('response', response)
+          // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -69,11 +69,11 @@ export const useStore = defineStore('home-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading = false
 
@@ -98,14 +98,14 @@ export const useStore = defineStore('home-store', {
         vm.date = payload?.date
       }
 
-      const items = await axios.get(host+`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`,{
+      const items = await axios.get(`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}`,{
           params: {
             keyword: vm?.keyword,
             date: vm?.date,
           }
         })
         .then(response => {
-          console.log('response', response)
+          // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -117,7 +117,7 @@ export const useStore = defineStore('home-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
@@ -146,13 +146,13 @@ export const useStore = defineStore('home-store', {
         vm.category = payload?.category
       }
 
-      const items = await axios.get(host+`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}&categories=${vm.category}`,{
+      const items = await axios.get(`posts?page=${vm?.current_page}&order=${vm?.order}&per_page=${vm?.per_page}&categories=${vm.category}`,{
           params: {
             keyword: vm?.keyword
           }
         })
         .then(response => {
-          console.log('response', response)
+          // console.log('response', response)
           return response
         })
         .catch(error => {
@@ -164,11 +164,11 @@ export const useStore = defineStore('home-store', {
             position: "top",
           })
           // this.errorMessage = error.message;
-          console.log('errorNotify', error.response)
+          // console.log('errorNotify', error.response)
           console.error("There was an error!", error);
           return null
         });
-      console.log('items', items)
+      // console.log('items', items)
 
       vm.loading_categories = false
 
